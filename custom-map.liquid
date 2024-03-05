@@ -1,0 +1,332 @@
+<div class="map94">
+<div class="container">
+{% if section.settings.heading !=blank %}
+<h1 class="heade">{{ section.settings.heading }}</h1>
+{% endif %}
+<div class="cover box85">
+    <select id="cityselect" onchange="selectCity(event)"></select>
+{% if section.settings.text %}	
+<div class="heading-result">{{ section.settings.text }}</div>
+{% endif %}
+<div class="scrolll_cover">
+<div class="scrolll">
+{% for block in section.blocks %}
+	<div class="answer_list1">
+	<div class="left_blcok1">
+		<svg stroke="currentColor" fill="#B48B6A" stroke-width="0" viewBox="0 0 384 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" style="font-size: 20px;"><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"></path></svg>
+	{% if block.settings.text1 !=blank %}		
+            <span>{{ block.settings.text1 }}</span>
+      {% endif %}
+		</div>
+		<div class="left_blcok2">
+	{% if block.settings.text1 !=blank %}		
+      <h3>{{ block.settings.text1 }}</h3>
+      {% endif %}
+       {{ block.settings.text2 }}
+       {{ block.settings.text3 }}
+		</div>
+	</div>
+{% endfor %}
+</div>
+  </div>
+</div>
+<div id="map-container">
+ <div id="googlemap" class="map"></div>
+</div>
+</div> 
+  </div> 
+{% schema %}
+  {
+    "name": "Custom Map Loctor",
+    "settings": [
+      {
+          "type": "text",
+          "id": "heading",
+          "default": "Heading",
+          "label": "Heading"
+        },
+      {
+          "type": "text",
+          "id": "text",
+          "default": "Text",
+          "label": "Text"
+        }
+    ],
+    "blocks": [
+    {
+      "name": "Adddress",
+      "type": "Adddress",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text1",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "text2",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "text3",
+          "label": "Title"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Map Loctor"
+    }
+  ]
+  }
+{% endschema %}
+<script>
+    var data = [
+            {
+                name: 'T3/144 Ormond Rd, Elwood, VIC - 3184, Australia',
+                lat: -37.886180,
+                lng: 144.988976,
+                content: 'T3/144 Ormond Rd, Elwood, VIC - 3184, Australia',
+                content_en: 'T3/144 Ormond Rd, Elwood, VIC - 3184, Australia'
+            },
+            { 
+                name: 'Shop E8/121 Exhibition Street Melbourne, VIC - 3000 Australia',
+                lat: -37.812992,
+                lng: 144.970346,
+                content: 'Shop E8/121 Exhibition Street Melbourne, VIC - 3000 Australia',
+                content_en: 'Shop E8/121 Exhibition Street Melbourne, VIC - 3000 Australia'
+            },
+            {
+                name: '42 Bay Road,Sandringham, VIC - 3191  Australia',
+                lat: -37.951949,
+                lng: 145.005305,
+                content: '42 Bay Road,Sandringham, VIC - 3191  Australia',
+                content_en: '42 Bay Road,Sandringham, VIC - 3191 Australia'
+              
+            },
+           {
+                name: 'Shop 135/400 Narre Warren - Cranbourne Rd,Narre Warren South, VIC - 3805 Australia',
+                lat: -38.0673245,
+                lng: 145.2954994,
+                content: 'Shop 135/400 Narre Warren - Cranbourne Rd,Narre Warren South, VIC - 3805 Australia',
+                content_en: 'Shop 135/400 Narre Warren - Cranbourne Rd,Narre Warren South, VIC - 3805 Australia'
+              
+            },
+            {
+                name: '78 Mount Eliza Way,Mount Eliza, VIC - 3930 Australia',
+                lat: -38.1830093,
+                lng: 145.0873449,
+                content: '78 Mount Eliza Way,Mount Eliza, VIC - 3930 Australia',
+                content_en: '78 Mount Eliza Way,Mount Eliza, VIC - 3930 Australia'
+              
+            }
+        ];
+        var mapstyle = {
+           background:  [{
+                    featureType: "all",
+                    elementType: "labels.text.fill",
+                    stylers: [{
+                        saturation: 36
+                    }, {
+                        color: "#000000"
+                    }, {
+                        lightness: 40
+                    }]
+                }, {
+                    featureType: "all",
+                    elementType: "labels.text.stroke",
+                    stylers: [{
+                        visibility: "on"
+                    }, {
+                        color: "#000000"
+                    }, {
+                        lightness: 16
+                    }]
+                }, {
+                    featureType: "all",
+                    elementType: "labels.icon",
+                    stylers: [{
+                        visibility: "off"
+                    }]
+                }, {
+                    featureType: "administrative",
+                    elementType: "geometry.fill",
+                    stylers: [{
+                        color: "#a42d2d"
+                    }]
+                }, {
+                    featureType: "administrative",
+                    elementType: "geometry.stroke",
+                    stylers: [{
+                        color: "#000000"
+                    }, {
+                        lightness: 17
+                    }, {
+                        weight: 1.2
+                    }]
+                }, {
+                    featureType: "administrative.country",
+                    elementType: "geometry.fill",
+                    stylers: [{
+                        gamma: "1.00"
+                    }, {
+                        color: "#ca3d3d"
+                    }]
+                }, {
+                    featureType: "landscape",
+                    elementType: "geometry",
+                    stylers: [{
+                        color: "#000000"
+                    }, {
+                        lightness: "20"
+                    }, {
+                        gamma: "1"
+                    }, {
+                        saturation: "0"
+                    }]
+                }, {
+                    featureType: "poi",
+                    elementType: "geometry",
+                    stylers: [{
+                        color: "#000000"
+                    }, {
+                        lightness: "20"
+                    }]
+                }, {
+                    featureType: "road.highway",
+                    elementType: "geometry.fill",
+                    stylers: [{
+                        color: "#000000"
+                    }, {
+                        lightness: 17
+                    }]
+                }, {
+                    featureType: "road.highway",
+                    elementType: "geometry.stroke",
+                    stylers: [{
+                        color: "#000000"
+                    }, {
+                        lightness: 29
+                    }, {
+                        weight: .2
+                    }]
+                }, {
+                    featureType: "road.arterial",
+                    elementType: "geometry",
+                    stylers: [{
+                        color: "#000000"
+                    }, {
+                        lightness: 18
+                    }]
+                }, {
+                    featureType: "road.local",
+                    elementType: "geometry",
+                    stylers: [{
+                        color: "#000000"
+                    }, {
+                        lightness: 16
+                    }]
+                }, {
+                    featureType: "transit",
+                    elementType: "geometry",
+                    stylers: [{
+                        color: "#000000"
+                    }, {
+                        lightness: 19
+                    }]
+                }, {
+                    featureType: "water",
+                    elementType: "geometry",
+                    stylers: [{
+                        color: "#000000"
+                    }, {
+                        lightness: "10"
+                    }]
+                }]
+        }
+
+        function initMap() {
+
+        // İlk açılışta haritayı ortalayacağı yer
+        var turkey = {lat: 31.39788233, lng: -94.19271083};
+        
+        var map = new google.maps.Map(document.getElementById('googlemap'), {
+            zoom: 13,
+            styles: mapstyle.background,
+            disableDefaultUI: true,
+            center: turkey
+        });
+
+        var markers = [];
+        var contents = [];
+        var infowindows = [];
+        var cities = document.getElementById('cityselect');
+
+        for (var i = 0; i < data.length; i++) {
+
+            // Haritaya eklenecek noktalar
+            markers[i] = new google.maps.Marker({
+                position: new google.maps.LatLng(data[i].lat, data[i].lng),
+                map: map,
+                index: i
+            });
+
+            // Sitenin diline göre data'daki ingilizce içeriği çektiği yer. Buranın doğru çalışabilmesi için dilin html tagına lang eklenmeli
+            if(document.documentElement.lang == "en"){
+                contents[i] = data[i].content_en
+            } else{
+                contents[i] = data[i].content
+            }
+
+            infowindows[i] = new google.maps.InfoWindow({
+                content: contents[i],
+                maxWidth: 300
+            });
+
+            // pin'lere tıklanınca ne yapacağı
+            google.maps.event.addListener(markers[i], 'click', function() {
+                infowindows[this.index].open(map,markers[this.index]);
+                map.panTo(markers[this.index].getPosition());
+
+                // tıklanılan haricindeki pencerelerin lapatılması
+                for (let j = 0; j < markers.length; j++) {
+                    if(j != this.index){
+                        infowindows[j].close(map,markers[j]);
+                    }
+                }
+            });
+
+            // select box'ın dinamik olarak data'dan doldurulması
+            cities.options[cities.options.length] = new Option(data[i].name, i);
+        }
+
+        // şehir seçince ne yapılacağı
+        selectCity = function(evt){
+            let ind = evt.target.value;
+            if(ind == "1017 Construction and Remodeling"){ // "Seçiniz" seçeneği seçilirse
+
+                // haritayı ortalıyor
+                var pos = new google.maps.LatLng(turkey);
+                map.panTo(pos);
+
+                // tüm info alanlarını kapatıyor
+                for (let j = 0; j < markers.length; j++) {
+                    infowindows[j].close(map,markers[j]);
+                }
+            } else{
+                // seçtiği şehri ortalıyor
+                infowindows[ind].open(map,markers[ind]);
+                map.panTo(markers[ind].getPosition());
+
+                // seçtiği şehrin haricindeki info alanlarını kapatıyor 
+                for (let j = 0; j < markers.length; j++) {
+                    if(j != ind){
+                         infowindows[j].close(map,markers[j]);
+                    }
+                }
+            }
+        }
+      }initMap()
+</script>
